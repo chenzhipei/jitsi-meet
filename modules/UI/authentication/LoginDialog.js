@@ -61,15 +61,6 @@ function LoginDialog(successCallback, cancelCallback) {
         finishedButtons.push(cancelButton());
     }
 
-    const connDialog = APP.UI.messageHandler.openDialogWithStates(
-        states, // eslint-disable-line no-use-before-define
-        {
-            persistent: true,
-            closeText: ''
-        },
-        null
-    );
-
     const states = {
         login: {
             titleKey: 'dialog.passwordRequired',
@@ -84,6 +75,7 @@ function LoginDialog(successCallback, cancelCallback) {
                     const password = f.password;
 
                     if (jid && password) {
+                        // eslint-disable-next-line no-use-before-define
                         connDialog.goToState('connecting');
                         successCallback(toJid(jid, config.hosts), password);
                     }
@@ -107,6 +99,7 @@ function LoginDialog(successCallback, cancelCallback) {
             submit(e, v) {
                 e.preventDefault();
                 if (v === 'retry') {
+                    // eslint-disable-next-line no-use-before-define
                     connDialog.goToState('login');
                 } else {
                     // User cancelled
@@ -115,6 +108,15 @@ function LoginDialog(successCallback, cancelCallback) {
             }
         }
     };
+
+    const connDialog = APP.UI.messageHandler.openDialogWithStates(
+        states,
+        {
+            persistent: true,
+            closeText: ''
+        },
+        null
+    );
 
     /**
      * Displays error message in 'finished' state which allows either to cancel
